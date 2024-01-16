@@ -52,7 +52,7 @@ public class MainMenuController {
 
     protected static String player2; // Definiere den Spielernamen für Spieler 2
 
-    protected String diff; // Definiere die Schwierigkeit der KI
+    protected Integer difficulty; // Definiere die Schwierigkeit der KI
 
     @FXML
     protected void onStartGameButtonClick(ActionEvent event) {
@@ -139,8 +139,20 @@ public class MainMenuController {
     }
 
     private void updateDifficulty() {
-        this.diff = getSelectedRadioButton(this.toggleGroupDifficulty);
-        System.out.println(this.diff);
+        String diff = getSelectedRadioButton(this.toggleGroupDifficulty);
+        switch (diff) {
+            case "Easy":
+                this.difficulty = 1;
+                break;
+            case "Medium":
+                this.difficulty = 2;
+                break;
+            case "Hard":
+                this.difficulty = 3;
+                break;     
+            default:
+                break;
+        }
     }
 
     // Diese Methode kann aufgerufen werden, um den ausgewählten RadioButton
