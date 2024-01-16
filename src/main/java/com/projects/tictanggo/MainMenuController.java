@@ -17,49 +17,60 @@ import com.projects.tictanggo.model.Game;
 import com.projects.tictanggo.model.Game.PlayerMode;
 
 public class MainMenuController {
+    @FXML
+    private RadioButton singleplayerRadioButton; // Referenz auf den Singleplayer-RadioButton
 
     @FXML
-    private RadioButton singleplayerRadioButton; // Definiere den Singleplayer Radio Button
+    private RadioButton multiplayerRadioButton; // Referenz auf den Multiplayer-RadioButton
 
     @FXML
-    private RadioButton multiplayerRadioButton; // Definiere den Multiplayer Radio Button
+    private RadioButton DiffEasy; // Referenz auf den Schwierigkeitsgrad-Einfach-RadioButton
 
     @FXML
-    private RadioButton DiffEasy;
+    private RadioButton DiffMedium; // Referenz auf den Schwierigkeitsgrad-Mittel-RadioButton
 
     @FXML
-    private RadioButton DiffMedium;
+    private RadioButton DiffHard; // Referenz auf den Schwierigkeitsgrad-Schwer-RadioButton
+
+    private ToggleGroup toggleGroupMode; // ToggleGroup für die Spielmodus-Auswahl (Single- oder Multiplayer)
+    // Diese Toggle Group ermöglicht es, dass nur ein RadioButton innerhalb dieser
+    // angehakt werden kann
+
+    private ToggleGroup toggleGroupDifficulty; // ToggleGroup für die Schwierigkeitsgrad-Auswahl
+    // Diese Toggle Group ermöglicht es, dass nur ein RadioButton innerhalb dieser
+    // angehakt werden kann
 
     @FXML
-    private RadioButton DiffHard;
-
-    private ToggleGroup toggleGroupMode;
-    // Definiere die ToggleGroup fürs Layout, in der die Radio Buttons sind.
-    // Diese Toggle Group ermöglicht es uns, dass nur ein Radio Button innerhalb
-    // dieser angehakt werden kann
-
-    private ToggleGroup toggleGroupDifficulty;
+    private Button startGameButton; // Referenz auf den Button zum Starten des Spiels
 
     @FXML
-    private Button startGameButton; // Definiere den Button, um das Game zu starten
+    private TextField textplayer1; // Referenz auf das Textfeld für Spieler 1
 
     @FXML
-    private TextField textplayer1; // Definiere das Textfeld für Spieler 1
-    @FXML
-    private TextField textplayer2; // Definiere das Textfeld für Spieler 2
+    private TextField textplayer2; // Referenz auf das Textfeld für Spieler 2
 
-    protected static String player1; // Definiere den Spielernamen für Spieler 1
+    protected static String player1; // Statische Variable für den Spielernamen von Spieler 1
 
-    protected static String player2; // Definiere den Spielernamen für Spieler 2
+    protected static String player2; // Statische Variable für den Spielernamen von Spieler 2
 
-    protected Integer difficulty; // Definiere die Schwierigkeit der KI
+    protected Integer difficulty; // Variable für die Schwierigkeitsstufe der KI
 
+    /**
+     * Behandelt das Klicken auf den "Start Game" Button.
+     * Lädt das FXML des Ingame-Menüs, erstellt eine Szene mit dem Ingame-Menü und
+     * zeigt sie an.
+     * Übergibt das erstellte Game-Objekt sowie Informationen zu den ausgewählten
+     * RadioButtons an den InGame-Controller.
+     * 
+     * @param event Das ActionEvent, das durch das Klicken des Buttons ausgelöst
+     *              wurde.
+     */
     @FXML
     protected void onStartGameButtonClick(ActionEvent event) {
-        // Lade das FXML des Ingame-Menüs -> Wir laden mit dieser Funktion die fxml
-        // Datei
+        // Lade das FXML des Ingame-Menüs
         FXMLLoader loader = new FXMLLoader(getClass().getResource("inGame.fxml"));
         try {
+            // Lade die Root-Komponente des Ingame-Menüs
             Parent root = loader.load();
 
             // Erstelle eine neue Szene mit dem Ingame-Menü
@@ -83,7 +94,8 @@ public class MainMenuController {
 
             // Setze das Game-Objekt im InGameController
             ingameController.setGame(game);
-            //Gebe die Werte des ausgewählten RadioButtons weiter
+
+            // Gebe die Werte des ausgewählten RadioButtons weiter
             ingameController.setSelectedRadioButton(getSelectedRadioButton(this.toggleGroupMode));
             ingameController.setDifficulty(this.difficulty);
 
@@ -92,7 +104,14 @@ public class MainMenuController {
         }
     }
 
-    // Erstelle das Game-Objekt basierend auf dem ausgewählten RadioButton
+    /**
+     * Erstellt ein Game-Objekt basierend auf dem ausgewählten RadioButton.
+     * Je nach Auswahl werden entweder ein Spiel gegen die KI (Singleplayer) oder
+     * ein
+     * Spiel für zwei Spieler (Multiplayer) erstellt.
+     * 
+     * @return Ein Game-Objekt, das aufgrund der Auswahl erstellt wurde.
+     */
     private Game createGame() {
         if ("Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode))) {
             // Wenn "Singleplayer" ausgewählt ist, erstelle ein Spiel gegen die KI
@@ -107,41 +126,70 @@ public class MainMenuController {
             this.player2 = player2Name; // Weise dem player2 den Text vom Textfeld zu
             return new Game(player1Name, player2Name, PlayerMode.TWO_PLAYER);
         } else {
+            // Falls keine gültige Auswahl getroffen wurde, gib null zurück
             return null;
         }
     }
 
+    /**
+     * Initialisiert den Controller, wird automatisch aufgerufen, wenn die FXML
+     * geladen wird.
+     * Hier werden ToggleGroups für die Radio Buttons erstellt, Listener hinzugefügt
+     * und die Sichtbarkeit sowie Schwierigkeitsstufe basierend auf den
+     * Auswahlwerten aktualisiert.
+     */
     @FXML
     public void initialize() {
-        toggleGroupMode = new ToggleGroup(); //Generiere eine neue ToggleGroup (ToggleGroup: ermöglicht die Gruppierung von Toggle Buttons/Radio Buttons, wodurch nur einer dieser gleichzeitig aktiviert sein kann)
-        singleplayerRadioButton.setToggleGroup(toggleGroupMode); // Füge den SingleplayerRadioButton zu der Toggle Group hinzu
-        multiplayerRadioButton.setToggleGroup(toggleGroupMode); // Füge den MultiplayerRadioButton zu der Toggle Group hinzu
+        // Generiere eine neue ToggleGroup für den Spielmodus
+        toggleGroupMode = new ToggleGroup();
+        // Füge den SingleplayerRadioButton zu der Toggle Group hinzu
+        singleplayerRadioButton.setToggleGroup(toggleGroupMode);
+        // Füge den MultiplayerRadioButton zu der Toggle Group hinzu
+        multiplayerRadioButton.setToggleGroup(toggleGroupMode);
 
-        toggleGroupDifficulty = new ToggleGroup(); //Generiere eine neue ToggleGroup
+        // Generiere eine neue ToggleGroup für die Schwierigkeitsgrade
+        toggleGroupDifficulty = new ToggleGroup();
         DiffEasy.setToggleGroup(toggleGroupDifficulty);
         DiffMedium.setToggleGroup(toggleGroupDifficulty);
         DiffHard.setToggleGroup(toggleGroupDifficulty);
 
-        // Füge einen Listener für Änderungen in der ToggleGroup hinzu
+        // Füge einen Listener für Änderungen in der ToggleGroup für Spielmodus hinzu
         toggleGroupMode.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             // Aktualisiere die Sichtbarkeit basierend auf dem ausgewählten RadioButton
             updateVisibility();
         });
 
+        // Füge einen Listener für Änderungen in der ToggleGroup für Schwierigkeitsgrade
+        // hinzu
         toggleGroupDifficulty.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             updateDifficulty();
         });
 
-        // Rufe die Methode auf, um die Sichtbarkeit zu initialisieren
+        // Rufe die Methode auf, um die Sichtbarkeit und Schwierigkeitsstufe zu
+        // initialisieren
         updateVisibility();
         updateDifficulty();
-        // Setue die Texte, die in der Funktion createGame() zugewiesen wurden. Diese Funktion wird erst wichtig, wenn man aus dem InGame zurück zum MainMenu kommt
+        // Setze die Texte, die in der Funktion createGame() zugewiesen wurden.
+        // Diese Funktion wird wichtig, wenn man aus dem InGame zurück zum MainMenu
+        // kommt
         setTexts();
     }
 
+    /**
+     * Aktualisiert die Schwierigkeitsstufe basierend auf dem ausgewählten
+     * RadioButton.
+     * Je nach Auswahl wird die Schwierigkeitsstufe auf 1 (Easy), 2 (Medium) oder 3
+     * (Hard) gesetzt.
+     * Falls keine gültige Auswahl getroffen wurde, bleibt die Schwierigkeitsstufe
+     * unverändert.
+     */
     private void updateDifficulty() {
-        String diff = getSelectedRadioButton(this.toggleGroupDifficulty);
-        switch (diff) {
+        // Holen Sie den ausgewählten RadioButton für die Schwierigkeitsgrade
+        String selectedDifficulty = getSelectedRadioButton(this.toggleGroupDifficulty);
+
+        // Aktualisiere die Schwierigkeitsstufe basierend auf dem ausgewählten
+        // RadioButton
+        switch (selectedDifficulty) {
             case "Easy":
                 this.difficulty = 1;
                 break;
@@ -150,52 +198,96 @@ public class MainMenuController {
                 break;
             case "Hard":
                 this.difficulty = 3;
-                break;     
+                break;
             default:
+                // Bei keiner gültigen Auswahl bleibt die Schwierigkeitsstufe unverändert
                 break;
         }
     }
 
-    // Diese Methode kann aufgerufen werden, um den ausgewählten RadioButton
-    // abzurufen
+    /**
+     * Ruft den Text des ausgewählten RadioButtons innerhalb einer ToggleGroup ab.
+     *
+     * @param group Die ToggleGroup, zu der die RadioButtons gehören.
+     * @return Der Text des ausgewählten RadioButtons oder null, wenn kein
+     *         RadioButton ausgewählt ist.
+     *         TODO: Fehlerhandling kann implementiert werden, falls notwendig.
+     */
     public String getSelectedRadioButton(ToggleGroup group) {
-        RadioButton selectedRadioButton = (RadioButton) group.getSelectedToggle(); // Weise der Variable RadioButton diesen zu, welcher selected ist
-        if (selectedRadioButton != null) { //Wenn ein RadioButton ausgewählt ist
-            return selectedRadioButton.getText(); //Dann hole dir den Text des RadioButtons
+        // Holen Sie den ausgewählten RadioButton innerhalb der ToggleGroup
+        RadioButton selectedRadioButton = (RadioButton) group.getSelectedToggle();
+
+        // Überprüfen Sie, ob ein RadioButton ausgewählt ist
+        if (selectedRadioButton != null) {
+            // Falls ausgewählt, geben Sie den Text des RadioButtons zurück
+            return selectedRadioButton.getText();
         }
-        return null; //TODO Fehlerhandling
+
+        // TODO: Hier könnte Fehlerbehandlung implementiert werden, falls gewünscht
+        return null;
     }
 
-    // Methode, um die Sichtbarkeit zu aktualisieren
+    /**
+     * Aktualisiert die Sichtbarkeit des Textfelds für Spieler 2 basierend auf dem
+     * ausgewählten Spielmodus.
+     * Wenn der Spielmodus "Singleplayer" ist, wird das Textfeld für Spieler 2
+     * unsichtbar gemacht,
+     * ansonsten wird es sichtbar gemacht.
+     */
     private void updateVisibility() {
-        // Wenn "Singleplayer" ausgewählt ist, mache textplayer2 nicht sichtbar, sonst mache es sichtbar
-        textplayer2.setVisible(!"Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode)));
-        textplayer2.setManaged(!"Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode)));
+        // Überprüfe, ob der ausgewählte Spielmodus "Singleplayer" ist
+        boolean isSingleplayerMode = "Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode));
+
+        // Setze die Sichtbarkeit des Textfelds für Spieler 2 basierend auf dem
+        // Spielmodus
+        textplayer2.setVisible(!isSingleplayerMode);
+        textplayer2.setManaged(!isSingleplayerMode);
     }
 
+    /**
+     * Setzt die Texte der Textfelder für Spieler 1 und Spieler 2 basierend auf den
+     * gespeicherten Spielernamen.
+     * Diese Methode wird verwendet, wenn der Benutzer vom Ingame-Menü zum Hauptmenü
+     * zurückkehrt.
+     */
     public void setTexts() {
-        textplayer1.setText(player1); //Setze den Text der Text-Box auf den Wert von player1
-        textplayer2.setText(player2); //Setze den Text der Text-Box auf den Wert von player2
+        // Setze den Text des Textfelds für Spieler 1 auf den Wert von player1
+        textplayer1.setText(player1);
+
+        // Setze den Text des Textfelds für Spieler 2 auf den Wert von player2
+        textplayer2.setText(player2);
     }
 
+    /**
+     * Event-Handler für den Klick auf den "Highscore" Button.
+     * Öffnet ein neues Fenster (Stage) mit der Highscore-Ansicht.
+     */
     @FXML
     protected void onHighscoreButtonClick(ActionEvent event) {
         try {
+            // Lade die FXML-Datei der Highscore-Ansicht
             FXMLLoader loader = new FXMLLoader(getClass().getResource("highscore.fxml"));
             Parent root = loader.load();
-    
-            Stage stage = new Stage(); // Erstelle eine neue Bühne (Stage)
+
+            // Erstelle eine neue Bühne (Stage) für die Highscore-Ansicht
+            Stage stage = new Stage();
             Scene scene = new Scene(root, 1280, 720);
+
+            // Füge das externe Stylesheet zur Szene hinzu
             scene.getStylesheets().add(getClass().getResource("/com/projects/styles.css").toExternalForm());
-    
+
+            // Setze die Szene für die Highscore-Bühne
             stage.setScene(scene);
+
+            // Setze den Titel der Highscore-Bühne
             stage.setTitle("Statistics");
-    
+
+            // Zeige die Highscore-Bühne an
             stage.show();
         } catch (IOException e) {
+            // Handle eine mögliche IOException, indem du die Fehlermeldung ausgibst
             e.printStackTrace();
         }
     }
-    
-    
+
 }
