@@ -1,0 +1,59 @@
+.box{
+    -fx-background-image: url(https://wallpapercave.com/dwp2x/wp5136655.jpg);
+}
+.btn-back{
+    -fx-border-color: white;
+    -fx-background-color: transparent;
+    -fx-border-radius: 12px;
+    -fx-text-fill: white;
+}
+.btn-back:hover{
+    -fx-border-color: purple;
+    -fx-background-color: rgba(231, 0, 231, 0.29);
+    -fx-text-fill: purple;
+}
+.pane, .btn-bar{
+    -fx-background-color: transparent;
+}
+.table-view, .table-view .columns{
+    -fx-background-color: rgba(26,26,26,0.75);
+}
+.table-view .column-header, .table-view .column-header-background, .table-view .filter{
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+.column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: rgba(26,26,26,0.75);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+    -fx-alignment: CENTER;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: rgba(26, 26, 26, 0.25);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(231, 0, 231, 0.29);
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+.table-column {
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER;
+}

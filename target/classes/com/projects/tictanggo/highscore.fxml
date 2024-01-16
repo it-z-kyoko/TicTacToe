@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+
+
+<BorderPane fx:controller="com.projects.tictanggo.HighScoreController"
+            styleClass="box"
+            maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0"
+            prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Der Rest deiner FXML-Datei bleibt unverändert -->
+
+    <top>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="btn-bar" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button fx:id="back_button" minWidth="37.0" mnemonicParsing="false" prefHeight="25.0" styleClass="btn-back" text="Back" /> <!-- Wenn ich die Action Hinterlege buggts rum -->
+            </buttons>
+            <padding>
+                <Insets left="15.0" right="15.0" />
+            </padding>
+        </ButtonBar>
+    </top>
+    <left>
+        <Pane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" styleClass="pane"/>
+    </left>
+    <right>
+        <Pane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" styleClass="pane"/>
+    </right>
+    <bottom>
+        <Pane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER" styleClass="pane"/>
+    </bottom>
+    <center>
+        <TableView fx:id="highscore_table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="playerColumn" prefWidth="275.0" text="Player"/>
+                <TableColumn fx:id="winsColumn" prefWidth="200.0" text="Wins" />
+                <TableColumn fx:id="lostColumn" prefWidth="200.0" text="Lost" />
+                <TableColumn fx:id="drawColumn" prefWidth="200.0" text="Draw" />
+                <TableColumn fx:id="totalColumn" prefWidth="200.0" text="Total" />
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

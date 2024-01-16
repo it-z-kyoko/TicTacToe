@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="487.0" prefWidth="1280.0" style="-fx-background-image: url('https://images.alphacoders.com/133/1331453.png'); -fx-background-repeat: stretch; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projects.tictanggo.MainMenuController">
+    <children>
+        <VBox alignment="CENTER" layoutY="12.0" prefHeight="697.0" prefWidth="1280.0">
+            <children>
+                <AnchorPane prefHeight="761.0" prefWidth="1280.0">
+                    <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="1.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Main Menu" textAlignment="CENTER" wrapText="false">
+                            <font>
+                                <Font size="18.0" fx:id="x1" />
+                            </font>
+                            <textFill>
+                                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                            </textFill>
+                        </Label>
+                        <BorderPane layoutX="446.0" layoutY="99.0" prefHeight="450.0" prefWidth="388.0">
+                            <center>
+                                <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#onStartGameButtonClick" prefHeight="30.0" prefWidth="388.0" style="-fx-background-color: transparent; -fx-border-color: white;" text="Start Game" textFill="WHITE" BorderPane.alignment="CENTER" />
+                            </center>
+                            <top>
+                                <ImageView fitHeight="201.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../assets/logo.png" />
+                                    </image>
+                                </ImageView>
+                            </top>
+                            <bottom>
+                                <GridPane BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints prefHeight="30.0" />
+                                        <RowConstraints maxHeight="114.40001208782196" minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Options" textFill="WHITE" GridPane.rowIndex="2" />
+                                        <Button fx:id="highscore" mnemonicParsing="false" onAction="#onHighscoreButtonClick" prefHeight="66.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Statistics" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            
+                                            <RadioButton fx:id="DiffEasy" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Easy" textFill="WHITE" GridPane.rowIndex="3" />
+                                            <RadioButton fx:id="DiffMedium" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Medium" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <RadioButton fx:id="DiffHard" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Hard" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="119.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <RadioButton fx:id="multiplayerRadioButton" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Multiplayer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <RadioButton fx:id="singleplayerRadioButton" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Singleplayer" textFill="WHITE" GridPane.rowIndex="1" />
+                                        <TextField fx:id="textplayer1" />
+                                        <TextField fx:id="textplayer2" GridPane.columnIndex="2" />
+                                    </children>
+                                </GridPane>
+                            </bottom>
+                        </BorderPane>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
