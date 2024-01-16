@@ -85,6 +85,7 @@ public class MainMenuController {
             ingameController.setGame(game);
             //Gebe die Werte des ausgewählten RadioButtons weiter
             ingameController.setSelectedRadioButton(getSelectedRadioButton(this.toggleGroupMode));
+            ingameController.setDifficulty(this.difficulty);
 
         } catch (IOException e) {
             e.printStackTrace();

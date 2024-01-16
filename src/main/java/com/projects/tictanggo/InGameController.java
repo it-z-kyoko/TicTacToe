@@ -41,6 +41,9 @@ public class InGameController {
     private PlayerMode playerMode;
     private String selectedRadioButton;
     private Database db;
+    private Integer difficulty;
+
+
 
     private Spieler spieler1;
     private Spieler spieler2;
@@ -284,6 +287,10 @@ public class InGameController {
     private void updateData(String tableName, String playerName, Integer won, Integer draw, Integer lose) {
         String updateValues = "won = won + " + won + ", draw = draw + " + draw + ", lose = lose + " + lose;
         db.update(tableName, playerName, updateValues);
+    }
+
+    protected void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
     }
 
 }
