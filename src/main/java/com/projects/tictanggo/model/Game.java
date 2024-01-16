@@ -36,7 +36,7 @@ public class Game {
         return playground;
     }
 
-    public Spieler getSPlayer2() {
+    public Spieler getPlayer2() {
         return Player2;
     }
 
