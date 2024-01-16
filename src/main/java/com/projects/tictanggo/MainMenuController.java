@@ -52,6 +52,8 @@ public class MainMenuController {
 
     protected static String player2; // Definiere den Spielernamen für Spieler 2
 
+    protected String diff; // Definiere die Schwierigkeit der KI
+
     @FXML
     protected void onStartGameButtonClick(ActionEvent event) {
         // Lade das FXML des Ingame-Menüs -> Wir laden mit dieser Funktion die fxml
@@ -82,7 +84,7 @@ public class MainMenuController {
             // Setze das Game-Objekt im InGameController
             ingameController.setGame(game);
             //Gebe die Werte des ausgewählten RadioButtons weiter
-            ingameController.setSelectedRadioButton(getSelectedRadioButton());
+            ingameController.setSelectedRadioButton(getSelectedRadioButton(this.toggleGroupMode));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,12 +93,12 @@ public class MainMenuController {
 
     // Erstelle das Game-Objekt basierend auf dem ausgewählten RadioButton
     private Game createGame() {
-        if ("Singleplayer".equals(getSelectedRadioButton())) {
+        if ("Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode))) {
             // Wenn "Singleplayer" ausgewählt ist, erstelle ein Spiel gegen die KI
             String player1Name = textplayer1.getText(); // Hole den Text vom Textfeld für Spieler 1
             this.player1 = player1Name;
             return new Game(player1Name, "AI", PlayerMode.VS_AI);
-        } else if ("Multiplayer".equals(getSelectedRadioButton())) {
+        } else if ("Multiplayer".equals(getSelectedRadioButton(this.toggleGroupMode))) {
             // Wenn "Multiplayer" ausgewählt ist, erstelle ein Spiel für zwei Spieler
             String player1Name = textplayer1.getText(); // Hole den Text vom Textfeld für Spieler 1
             String player2Name = textplayer2.getText(); // Hole den Text vom Textfeld für Spieler 2
@@ -119,23 +121,32 @@ public class MainMenuController {
         DiffMedium.setToggleGroup(toggleGroupDifficulty);
         DiffHard.setToggleGroup(toggleGroupDifficulty);
 
-
         // Füge einen Listener für Änderungen in der ToggleGroup hinzu
         toggleGroupMode.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             // Aktualisiere die Sichtbarkeit basierend auf dem ausgewählten RadioButton
             updateVisibility();
         });
 
+        toggleGroupDifficulty.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            updateDifficulty();
+        });
+
         // Rufe die Methode auf, um die Sichtbarkeit zu initialisieren
         updateVisibility();
+        updateDifficulty();
         // Setue die Texte, die in der Funktion createGame() zugewiesen wurden. Diese Funktion wird erst wichtig, wenn man aus dem InGame zurück zum MainMenu kommt
         setTexts();
     }
 
+    private void updateDifficulty() {
+        this.diff = getSelectedRadioButton(this.toggleGroupDifficulty);
+        System.out.println(this.diff);
+    }
+
     // Diese Methode kann aufgerufen werden, um den ausgewählten RadioButton
     // abzurufen
-    public String getSelectedRadioButton() {
-        RadioButton selectedRadioButton = (RadioButton) toggleGroupMode.getSelectedToggle(); // Weise der Variable RadioButton diesen zu, welcher selected ist
+    public String getSelectedRadioButton(ToggleGroup group) {
+        RadioButton selectedRadioButton = (RadioButton) group.getSelectedToggle(); // Weise der Variable RadioButton diesen zu, welcher selected ist
         if (selectedRadioButton != null) { //Wenn ein RadioButton ausgewählt ist
             return selectedRadioButton.getText(); //Dann hole dir den Text des RadioButtons
         }
@@ -145,8 +156,8 @@ public class MainMenuController {
     // Methode, um die Sichtbarkeit zu aktualisieren
     private void updateVisibility() {
         // Wenn "Singleplayer" ausgewählt ist, mache textplayer2 nicht sichtbar, sonst mache es sichtbar
-        textplayer2.setVisible(!"Singleplayer".equals(getSelectedRadioButton()));
-        textplayer2.setManaged(!"Singleplayer".equals(getSelectedRadioButton()));
+        textplayer2.setVisible(!"Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode)));
+        textplayer2.setManaged(!"Singleplayer".equals(getSelectedRadioButton(this.toggleGroupMode)));
     }
 
     public void setTexts() {
