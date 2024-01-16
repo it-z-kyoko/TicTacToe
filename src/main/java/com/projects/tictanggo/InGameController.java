@@ -88,7 +88,7 @@ public class InGameController {
                     // Verwende einen ScheduledExecutorService für eine Verzögerung von 1 Sekunde
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                     executorService.schedule(() -> {
-                        int[] aiMove = aiPlayer.makeMove(game.getPlayground(), 3);
+                        int[] aiMove = aiPlayer.makeMove(game.getPlayground(), this.difficulty);
 
                         // Aktualisiere den Button für die KI im Anwendungsthread
                         Platform.runLater(() -> {
