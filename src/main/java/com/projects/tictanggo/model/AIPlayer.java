@@ -2,11 +2,29 @@ package com.projects.tictanggo.model;
 
 import java.util.Random;
 
+/**
+ * Die Klasse AIPlayer repräsentiert einen KI-Spieler im Tic-Tac-Toe-Spiel.
+ */
 public class AIPlayer extends Spieler {
+
+    /**
+     * Konstruktor für die AIPlayer-Klasse.
+     *
+     * @param name   Der Name des KI-Spielers.
+     * @param symbol Das Symbol des KI-Spielers (X oder O).
+     */
     public AIPlayer(String name, Symbol symbol) {
         super(name, symbol);
     }
 
+    /**
+     * Macht einen Zug basierend auf dem gewählten Schwierigkeitsgrad.
+     *
+     * @param playground Das aktuelle Spielfeld.
+     * @param difficulty Der Schwierigkeitsgrad (1: Zufällige Züge, 2: Strategische
+     *                   Züge, 3: Priorisierte gewinnbringende Züge).
+     * @return Ein Array mit den Koordinaten des Zugs (x, y).
+     */
     public int[] makeMove(Symbol[][] playground, int difficulty) {
         switch (difficulty) {
             case 1:
@@ -20,6 +38,12 @@ public class AIPlayer extends Spieler {
         }
     }
 
+    /**
+     * Macht einen zufälligen Zug auf dem Spielfeld.
+     *
+     * @param playground Das aktuelle Spielfeld.
+     * @return Ein Array mit den Koordinaten des Zugs (x, y).
+     */
     private int[] makeRandomMove(Symbol[][] playground) {
         Random random = new Random();
 
@@ -32,7 +56,15 @@ public class AIPlayer extends Spieler {
         return new int[] { x, y };
     }
 
-    private int[] makeStrategicMove(Symbol[][] playground, boolean prioritizeWin) {
+    /**
+     * Macht einen strategischen Zug auf dem Spielfeld.
+     *
+     * @param playground        Das aktuelle Spielfeld.
+     * @param prioritizeWinning Gibt an, ob gewinnbringende Züge priorisiert werden
+     *                          sollen.
+     * @return Ein Array mit den Koordinaten des Zugs (x, y).
+     */
+    private int[] makeStrategicMove(Symbol[][] playground, boolean prioritizeWinning) {
         Symbol aiSymbol = Symbol.O; // Annahme: Die KI verwendet das Symbol "O"
 
         // Überprüfe, ob die KI einen eigenen Gewinnzug machen kann
@@ -66,18 +98,37 @@ public class AIPlayer extends Spieler {
             }
         }
 
-        // Wenn es keine Möglichkeit gibt, den Gewinn des Gegners zu verhindern, mache
-        // einen zufälligen Zug
-        Random random = new Random();
-        int x, y;
-        do {
-            x = random.nextInt(3);
-            y = random.nextInt(3);
-        } while (playground[x][y] != Symbol.E);
+        // Wenn es keine Möglichkeit gibt, den Gewinn des Gegners zu verhindern oder zu
+        // gewinnen,
+        // mache einen zufälligen Zug (kann verbessert werden)
+        if (!prioritizeWinning) {
+            return makeRandomMove(playground);
+        }
 
-        return new int[] { x, y };
+        // Priorisiere gewinnbringende Züge (kann angepasst werden)
+        return prioritizeWinningMove(playground);
     }
 
+    /**
+     * Priorisiert einen gewinnbringenden Zug auf dem Spielfeld.
+     *
+     * @param playground Das aktuelle Spielfeld.
+     * @return Ein Array mit den Koordinaten des gewinnbringenden Zugs (x, y).
+     */
+    private int[] prioritizeWinningMove(Symbol[][] playground) {
+        // Implementiere deine Logik für priorisierte gewinnbringende Züge hier (kann
+        // angepasst werden)
+        // In dieser einfachen Implementierung wird ein zufälliger Zug gemacht
+        return makeRandomMove(playground);
+    }
+
+    /**
+     * Überprüft, ob ein Spieler mit dem gegebenen Symbol gewonnen hat.
+     *
+     * @param playground Das aktuelle Spielfeld.
+     * @param symbol     Das zu überprüfende Symbol.
+     * @return True, wenn der Spieler mit dem Symbol gewonnen hat, sonst False.
+     */
     private boolean checkWin(Symbol[][] playground, Symbol symbol) {
         // Überprüfe Zeilen und Spalten
         for (int i = 0; i < 3; i++) {
@@ -99,5 +150,4 @@ public class AIPlayer extends Spieler {
 
         return false;
     }
-
 }
