@@ -47,28 +47,43 @@ public class HighScoreController {
 
     private Database db;
 
-    // Hier kannst du Daten zur TableView hinzufügen
+    /**
+     * Initialisiert die TableView und ihre Spalten. Liest Daten aus der Datenbank
+     * und fügt sie der TableView hinzu.
+     * Konfiguriert außerdem die Sortierung der TableView nach der "Total"-Spalte in
+     * absteigender Reihenfolge.
+     */
     @FXML
     private void initialize() {
-        // Hier kannst du die TableView und ihre Spalten konfigurieren
+        // Konfiguriere die TableView und ihre Spalten
         playerColumn.setCellValueFactory(cellData -> cellData.getValue().playerProperty());
         winsColumn.setCellValueFactory(cellData -> cellData.getValue().winsProperty().asObject());
         lostColumn.setCellValueFactory(cellData -> cellData.getValue().lostProperty().asObject());
         drawColumn.setCellValueFactory(cellData -> cellData.getValue().drawProperty().asObject());
         totalColumn.setCellValueFactory(cellData -> cellData.getValue().totalProperty().asObject());
 
-        // Daten aus der Datenbank lesen und in die TableView setzen
-        db = new Database("TicTacToe"); // Setze den Namen deiner Datenbank ein
+        // Erstelle eine Database-Instanz mit dem Namen "TicTacToe"
+        db = new Database("TicTacToe");
+
+        // Setze Daten aus der Datenbank in die TableView
         highscore_table.setItems(getDatabaseData());
 
-        // Sortiere nach der "Total"-Spalte absteigend
+        // Konfiguriere die Sortierung nach der "Total"-Spalte in absteigender
+        // Reihenfolge
         totalColumn.setSortType(TableColumn.SortType.DESCENDING);
         highscore_table.getSortOrder().add(totalColumn);
         highscore_table.sort();
     }
 
-    // Hier kannst du Daten aus der Datenbank holen und sie in eine ObservableList
-    // umwandeln
+    /**
+     * Holt Daten aus der Datenbank und wandelt sie in eine ObservableList von
+     * PlayerData-Objekten um.
+     * Es wird angenommen, dass die Methode "read" in der Datenbank eine ResultSet
+     * mit Spielerdaten zurückgibt.
+     *
+     * @return ObservableList von PlayerData-Objekten, die aus den Datenbankdaten
+     *         erstellt wurden.
+     */
     private ObservableList<PlayerData> getDatabaseData() {
         ObservableList<PlayerData> data = FXCollections.observableArrayList();
 
@@ -92,6 +107,13 @@ public class HighScoreController {
         return data;
     }
 
+    /**
+     * Event-Handler für den Klick auf den "Zurück" Button.
+     * Lädt die FXML-Datei des Hauptmenüs und wechselt zur Hauptmenüszene.
+     *
+     * @param event Das ActionEvent, das den Klick auf den "Zurück" Button ausgelöst
+     *              hat.
+     */
     protected void onBackButtonClick(ActionEvent event) {
         try {
             // Lade die FXML-Datei des Hauptmenüs
@@ -112,7 +134,9 @@ public class HighScoreController {
             stage.show();
 
         } catch (IOException e) {
+            // Behandele mögliche IOExceptions, z.B. wenn die FXML-Datei nicht gefunden wird
             e.printStackTrace();
         }
     }
+
 }
