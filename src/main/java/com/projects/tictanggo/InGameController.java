@@ -144,7 +144,7 @@ public class InGameController {
                 }
             }
             // Aktualisiere den aktuellen Spieler auf den im Spiel aktiven Spieler
-            this.aktuellerSpieler = game.getActiveSpieler();
+            this.aktuellerSpieler = game.getActivePlayer();
         }
     }
 
