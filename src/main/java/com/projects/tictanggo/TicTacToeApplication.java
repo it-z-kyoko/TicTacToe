@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class HelloApplication extends Application {
+public class TicTacToeApplication extends Application {
     /**
      * Die start-Methode wird aufgerufen, wenn die JavaFX-Anwendung gestartet wird.
      * Hier wird die Anwendung initialisiert, die Datenbank eingerichtet und das
@@ -26,7 +26,7 @@ public class HelloApplication extends Application {
 
         // Lade die FXML-Datei des Hauptmenüs mit Hilfe des FXMLLoader
         FXMLLoader fxmlLoader = new FXMLLoader(
-                HelloApplication.class.getResource("/com/projects/tictanggo/mainMenu.fxml"));
+                TicTacToeApplication.class.getResource("/com/projects/tictanggo/mainMenu.fxml"));
 
         // Erstelle eine Szene (Scene) mit der geladenen FXML-Datei und einer
         // festgelegten Größe
