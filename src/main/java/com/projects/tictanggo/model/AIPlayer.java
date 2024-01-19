@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Die Klasse AIPlayer repräsentiert einen KI-Spieler im Tic-Tac-Toe-Spiel.
  */
-public class AIPlayer extends Spieler {
+public class AIPlayer extends Player {
 
     /**
      * Konstruktor für die AIPlayer-Klasse.

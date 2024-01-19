@@ -3,7 +3,7 @@ package com.projects.tictanggo.model;
 /**
  * Die Klasse Spieler repräsentiert einen Spieler im Tic-Tac-Toe-Spiel.
  */
-public class Spieler {
+public class Player {
     // Der Name des Spielers
     private final String name;
 
@@ -16,7 +16,7 @@ public class Spieler {
      * @param name   Der Name des Spielers.
      * @param symbol Das Symbol des Spielers (X, O oder E).
      */
-    public Spieler(String name, Symbol symbol) {
+    public Player(String name, Symbol symbol) {
         this.name = name;
         this.symbol = symbol;
     }

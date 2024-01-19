@@ -1,6 +1,6 @@
 package com.projects.tictanggo.model;
 
-import com.projects.tictanggo.model.Spieler.Symbol;
+import com.projects.tictanggo.model.Player.Symbol;
 
 /**
  * Die Klasse Game repräsentiert ein Tic-Tac-Toe-Spiel.
@@ -10,9 +10,9 @@ public class Game {
     private Symbol[][] playground;
 
     // Spieler
-    private Spieler player1;
-    private Spieler player2;
-    private Spieler activePlayer;
+    private Player player1;
+    private Player player2;
+    private Player activePlayer;
 
     // Spielzustand
     private GameState gameState;
@@ -31,8 +31,8 @@ public class Game {
      * @param playerMode Der Spielmodus (Zwei Spieler oder gegen KI).
      */
     public Game(String name1, String name2, PlayerMode playerMode) {
-        this.player1 = new Spieler(name1, Symbol.X);
-        this.player2 = new Spieler(name2, Symbol.O);
+        this.player1 = new Player(name1, Symbol.X);
+        this.player2 = new Player(name2, Symbol.O);
         this.activePlayer = this.player1;
         this.playground = new Symbol[3][3];
         this.gameState = GameState.Running;
@@ -47,20 +47,20 @@ public class Game {
 
         // Falls der Spielmodus KI gegen Spieler ist, erstelle einen KI-Spieler
         if (playerMode == PlayerMode.VS_AI) {
-            aiPlayer = new AIPlayer("AI", Spieler.Symbol.O);
+            aiPlayer = new AIPlayer("AI", Player.Symbol.O);
         }
     }
 
     // Getter-Methoden für verschiedene Attribute
-    public Spieler getPlayer1() {
+    public Player getPlayer1() {
         return player1;
     }
 
-    public Spieler getPlayer2() {
+    public Player getPlayer2() {
         return player2;
     }
 
-    public Spieler getActivePlayer() {
+    public Player getActivePlayer() {
         return activePlayer;
     }
 

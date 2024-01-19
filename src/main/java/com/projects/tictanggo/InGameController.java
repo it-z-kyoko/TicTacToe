@@ -13,8 +13,8 @@ import com.projects.tictanggo.model.AIPlayer; // Importiere die AIPlayer-Klasse
 import com.projects.tictanggo.model.Game;
 import com.projects.tictanggo.model.Game.GameState;
 import com.projects.tictanggo.model.Game.PlayerMode;
-import com.projects.tictanggo.model.Spieler;
-import com.projects.tictanggo.model.Spieler.Symbol;
+import com.projects.tictanggo.model.Player;
+import com.projects.tictanggo.model.Player.Symbol;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -32,10 +32,6 @@ import javafx.stage.Stage;
 
 public class InGameController {
     @FXML
-    private Label welcomeText;
-    @FXML
-    private Button btn;
-    @FXML
     private GridPane gridPane;
 
     // Spielzustand (GameState) und Spielermodus (PlayerMode)
@@ -50,17 +46,17 @@ public class InGameController {
     private Integer difficulty;
 
     // Spieler-Objekte
-    private Spieler spieler1;
-    private Spieler spieler2;
+    private Player player1;
+    private Player spieler2;
 
     // Eine Instanz der AIPlayer-Klasse, die den Computergegner repräsentiert
-    private final AIPlayer aiPlayer = new AIPlayer("AI", Spieler.Symbol.O);
+    private AIPlayer aiPlayer = new AIPlayer("AI", Player.Symbol.O);
 
     // Game-Objekt, das den aktuellen Zustand des Spiels verwaltet
     private Game game;
 
     // Aktueller Spieler, Annahme: spieler1 ist der Startspieler
-    private Spieler aktuellerSpieler;
+    private Player currentPlayer;
 
     /**
      * Setzt das Game-Objekt und initialisiert die Spieler, den aktuellen Spieler
@@ -70,9 +66,9 @@ public class InGameController {
      */
     public void setGame(Game game) {
         this.game = game; // Setze das Game-Objekt der Klasse auf das übergebene Game-Objekt
-        this.spieler1 = game.getPlayer1(); // Setze den Spieler 1 der Klasse auf den Spieler 1 des Spiels
+        this.player1 = game.getPlayer1(); // Setze den Spieler 1 der Klasse auf den Spieler 1 des Spiels
         this.spieler2 = game.getPlayer2(); // Setze den Spieler 2 der Klasse auf den Spieler 2 des Spiels
-        this.aktuellerSpieler = spieler1; // Setze den aktuellen Spieler auf spieler1 (Annahme: spieler1 ist der
+        this.currentPlayer = player1; // Setze den aktuellen Spieler auf spieler1 (Annahme: spieler1 ist der
                                           // Startspieler)
         this.db = new Database("TicTacToe"); // Initialisiere die Datenbank mit dem Namen "TicTacToe"
     }
@@ -88,13 +84,13 @@ public class InGameController {
 
         // Überprüfe, ob der aktuelle Spieler und sein Name vorhanden sind und ob der
         // Button leer ist
-        if (aktuellerSpieler != null && aktuellerSpieler.getName() != null && clickedButton.getText().isEmpty()) {
-            clickedButton.setText(aktuellerSpieler.getSymbol().toString());
+        if (currentPlayer != null && currentPlayer.getName() != null && clickedButton.getText().isEmpty()) {
+            clickedButton.setText(currentPlayer.getSymbol().toString());
 
             // Ermittle die Zeile und Spalte des geklickten Buttons
             int row = GridPane.getRowIndex(clickedButton);
             int col = GridPane.getColumnIndex(clickedButton);
-            Symbol symbol = aktuellerSpieler.getSymbol();
+            Symbol symbol = currentPlayer.getSymbol();
 
             // Spiele den Zug und erhalte den aktuellen Spielzustand
             this.gameState = game.playTrain(row, col, symbol);
@@ -108,7 +104,7 @@ public class InGameController {
             } else {
                 System.out.println("Das Spiel läuft weiter.");
 
-                if (game.getPlayerMode() == PlayerMode.VS_AI && aktuellerSpieler.equals(spieler1)) {
+                if (game.getPlayerMode() == PlayerMode.VS_AI && currentPlayer.equals(player1)) {
                     // Wenn der aktive Spieler spieler1 und der Spielmodus VS_AI ist, wechsle zum
                     // KI-Spieler (aiPlayer)
 
@@ -137,14 +133,14 @@ public class InGameController {
                                 resetGame();
                             } else {
                                 // Wechsle den aktiven Spieler nach dem Zug der KI zurück zu spieler1
-                                aktuellerSpieler = spieler1;
+                                currentPlayer = player1;
                             }
                         });
                     }, 1, TimeUnit.SECONDS);
                 }
             }
             // Aktualisiere den aktuellen Spieler auf den im Spiel aktiven Spieler
-            this.aktuellerSpieler = game.getActivePlayer();
+            this.currentPlayer = game.getActivePlayer();
         }
     }
 
@@ -183,14 +179,14 @@ public class InGameController {
 
         if (gameState == GameState.Won) {
             // Wenn das Spiel gewonnen ist, ermittele den tatsächlichen Gewinner
-            winnerName = (aktuellerSpieler.equals(spieler1)) ? spieler1.getName() : spieler2.getName();
+            winnerName = (currentPlayer.equals(player1)) ? player1.getName() : spieler2.getName();
             message = winnerName + " won!"; // Erstelle die Gewinnnachricht
 
             // Speichere die Ergebnisse in der Datenbank
-            if (winnerName.equals(spieler1.getName())) {
+            if (winnerName.equals(player1.getName())) {
                 safe("p1win", winnerName, spieler2.getName());
             } else if (winnerName.equals(spieler2.getName())) {
-                safe("p1lose", spieler1.getName(), winnerName);
+                safe("p1lose", player1.getName(), winnerName);
             }
         } else {
             // Bei einem Unentschieden
@@ -198,7 +194,7 @@ public class InGameController {
             message = "The game ends in a draw!"; // Erstelle die Nachricht für ein Unentschieden
 
             // Speichere die Ergebnisse in der Datenbank
-            safe("draw", spieler1.getName(), spieler2.getName());
+            safe("draw", player1.getName(), spieler2.getName());
         }
 
         // Zeige den Ergebnisdialog mit Titel "Game ends" und der erstellten Nachricht
@@ -270,6 +266,9 @@ public class InGameController {
 
             // Setze den Titel der Bühne (optional)
             stage.setTitle("Main menu");
+
+            MainMenuController controller = new MainMenuController();
+            controller.setTexts();
 
             // Zeige die Bühne an
             stage.show();

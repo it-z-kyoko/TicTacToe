@@ -117,6 +117,7 @@ public class MainMenuController {
             // Wenn "Singleplayer" ausgewählt ist, erstelle ein Spiel gegen die KI
             String player1Name = textplayer1.getText(); // Hole den Text vom Textfeld für Spieler 1
             this.player1 = player1Name;
+            setTexts();
             return new Game(player1Name, "AI", PlayerMode.VS_AI);
         } else if ("Multiplayer".equals(getSelectedRadioButton(this.toggleGroupMode))) {
             // Wenn "Multiplayer" ausgewählt ist, erstelle ein Spiel für zwei Spieler
